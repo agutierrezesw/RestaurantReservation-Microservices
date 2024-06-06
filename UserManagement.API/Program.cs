@@ -1,6 +1,7 @@
 using UserManagement.API.RouteHandlerExtensions;
 using UserManagement.Application;
 using UserManagement.Infrastructure;
+using UserManagement.Infrastructure.DataSeeds;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,11 +24,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 
-    // REMARK: Uncomment if you want to apply migrations automatically.
+    // Uncomment if you want to apply migrations automatically.
     //app.ApplyMigrations();
 
-    // REMARK: Uncomment if you want to seed initial data.
-    //app.SeedData();
+    // Uncomment if you want to seed initial data.
+    app.SeedData(builder.Services);
 }
 
 app.UseHttpsRedirection();
