@@ -8,19 +8,19 @@ using UserManagement.Domain.Repositories;
 
 namespace UserManagement.Infrastructure.Repository
 {
-    internal class InMemoryCustomerRepository: ICustomerRepository
+    public class InMemoryCustomerRepository: ICustomerRepository
     {
         private static readonly List<Customer> _items = [];
         public InMemoryCustomerRepository() { }
 
-        Task<Customer?> ICustomerRepository.GetByIdAsync(int id, CancellationToken cancellationToken)
+        public Task<Customer?> GetByIdAsync(int id, CancellationToken cancellationToken)
         {
             var customer = _items != null ? _items.FirstOrDefault(i => i.Id == id) : null;
 
             return Task.FromResult(customer);
         }
 
-        Task<int> ICustomerRepository.AddAndSaveAsync(Customer item, CancellationToken cancellationToken)
+        public Task<int> AddAndSaveAsync(Customer item, CancellationToken cancellationToken)
         {
             int id = _items.Count > 0 ? _items.Max(i => i.Id) + 1 : 1;
             item.Id = id;
@@ -29,7 +29,7 @@ namespace UserManagement.Infrastructure.Repository
             return Task.FromResult(item.Id);
         }
 
-        Task ICustomerRepository.DeleteByIdAsync(int id, CancellationToken cancellationToken)
+        public Task DeleteByIdAsync(int id, CancellationToken cancellationToken)
         {
             _items.RemoveAll(i => i.Id == id);
 

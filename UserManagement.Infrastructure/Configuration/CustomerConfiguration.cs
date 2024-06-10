@@ -12,21 +12,26 @@ namespace UserManagement.Infrastructure.Configuration
 {
     public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
     {
-        public void Configure(EntityTypeBuilder<Customer> entity)
+        public void Configure(EntityTypeBuilder<Customer> builder)
         {
-            entity.HasKey(e => e.Id);
+            builder.HasKey(c => c.Id);
 
-            entity.Property(e => e.FirstName)
+            builder.Property(c => c.FirstName)
                 .IsRequired()
-                .HasMaxLength(250)
-                .IsUnicode(false);
+                .HasMaxLength(100);
 
-            entity.Property(e => e.LastName)
+            builder.Property(c => c.LastName)
                 .IsRequired()
-                .HasMaxLength(250)
-                .IsUnicode(false);
+                .HasMaxLength(150);
 
-            //entity.Property(e => e.TotalNumberOfReservations);
+            builder.Property(c => c.Email)
+                .IsRequired();
+
+            builder.Property(c => c.TotalNumberOfReservations)
+                .IsRequired();
+
+            builder.Property(c => c.LastRestaurantReserved)
+                .HasMaxLength(100);
         }
     }
 }
