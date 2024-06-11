@@ -1,4 +1,5 @@
 ﻿using ReservationManagement.Domain.Repositories;
+using MediatR;
 
 namespace ReservationManagement.Application.Services.ReservationServices
 {
