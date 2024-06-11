@@ -1,27 +1,21 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace UserManagement.Infrastructure;
+
+using Microsoft.EntityFrameworkCore;
 using UserManagement.Domain.Entities.Customers;
 using UserManagement.Infrastructure.Configuration;
 
-namespace UserManagement.Infrastructure
+public class ApplicationDBContext : DbContext
 {
-    internal class ApplicationDBContext: DbContext
+    public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options)
     {
-        public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options)
-        {
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-
-            modelBuilder.ApplyConfiguration(new CustomerConfiguration());
-        }
-
-        public DbSet<Customer> Customers { get; set; }
     }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.ApplyConfiguration(new CustomerConfiguration());
+    }
+
+    public DbSet<Customer> Customers { get; init; }
 }

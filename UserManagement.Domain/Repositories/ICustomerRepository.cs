@@ -13,6 +13,6 @@ namespace UserManagement.Domain.Repositories
 
         Task<int> AddAndSaveAsync(Customer customer, CancellationToken cancellationToken = default);
 
-        Task DeleteByIdAsync(int id, CancellationToken cancellationToken = default);
+        Task<int> DeleteByIdAsync(int id, CancellationToken cancellationToken = default);
     }
 }
