@@ -10,10 +10,10 @@ public static class DependencyInjections
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        string sqlDatabaseConnectionString = configuration.GetConnectionString("SqlDatabaseConnectionString") 
+        string sqlDatabaseConnectionString = configuration.GetConnectionString("DefaultConnection") 
                                              ?? throw new ArgumentNullException(nameof(configuration));
 
-        services.AddDbContext<ApplicationDBContext>(options => options.UseMySQL(sqlDatabaseConnectionString));
+        services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(sqlDatabaseConnectionString));
 
         services.AddScoped<ICustomerRepository, CustomerRepository>();
 

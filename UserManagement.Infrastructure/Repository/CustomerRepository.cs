@@ -30,8 +30,6 @@ public class CustomerRepository(ApplicationDBContext context) : ICustomerReposit
         }
 
         _dbSet.Remove(entity);
-        await _dbContext.SaveChangesAsync(cancellationToken);
-
-        return 1;
+        return await _dbContext.SaveChangesAsync(cancellationToken);
     }
 }

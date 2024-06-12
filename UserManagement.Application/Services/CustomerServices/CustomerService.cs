@@ -29,6 +29,9 @@ namespace UserManagement.Application.Services.CustomerServices
 
             // Add the customer to the repository
             return await _customerRepository.AddAndSaveAsync(customer);
+            
+            //EventRecorder.Record(new UserWasCreatedEvent()); 
+            // eventrecorder -> kafka publisher
         }
 
         public async Task DeleteCustomerAsync(int id)

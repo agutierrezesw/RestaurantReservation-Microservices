@@ -15,6 +15,11 @@ builder.Services.AddApplication();
 // Add infrastructure injections
 builder.Services.AddInfrastructure(builder.Configuration);
 
+// builder.WebHost.ConfigureKestrel(options =>
+// {
+//     options.ListenAnyIP(5000); // HTTP:localhost:5000 /swager/
+//     options.ListenAnyIP(5001, listenOptions => listenOptions.UseHttps()); // HTTPS
+// });
 
 var app = builder.Build();
 
