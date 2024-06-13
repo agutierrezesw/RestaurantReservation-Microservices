@@ -33,7 +33,7 @@ if (app.Environment.IsDevelopment())
     //app.ApplyMigrations();
 
     // Uncomment if you want to seed initial data.
-    app.SeedData(builder.Services);
+    // app.SeedData(builder.Services);
 }
 
 app.UseHttpsRedirection();

@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  user-management-api:
+    container_name: user-management-api
+    image: ljarpag/todo-api:latest
+    environment:
+      DefaultConnection: "Server=db;Database=user_management;User=sa;Password=Admin1234!;TrustServerCertificate=True"
+    ports:
+      - 5000:5000
+    networks:
+      - apps
+
+  sqlserver:
+    container_name: sqlserver
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - 1433:1433
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Admin1234!
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+      
+volumes:
+  sqlserver_data:      
+
+networks:
+  apps:
+    external: true

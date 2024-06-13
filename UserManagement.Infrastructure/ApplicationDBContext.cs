@@ -1,14 +1,12 @@
 ﻿namespace UserManagement.Infrastructure;
 
 using Microsoft.EntityFrameworkCore;
-using UserManagement.Domain.Entities.Customers;
-using UserManagement.Infrastructure.Configuration;
+using Domain.Entities.Customers;
+using Configuration;
 
-public class ApplicationDBContext : DbContext
+public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
 {
-    public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options)
-    {
-    }
+    public DbSet<Customer> Customers { get; init; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -16,6 +14,4 @@ public class ApplicationDBContext : DbContext
 
         modelBuilder.ApplyConfiguration(new CustomerConfiguration());
     }
-
-    public DbSet<Customer> Customers { get; init; }
 }

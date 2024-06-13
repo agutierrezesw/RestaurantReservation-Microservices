@@ -4,9 +4,9 @@ using UserManagement.Domain.Repositories;
 
 namespace UserManagement.Infrastructure.Repository;
 
-public class CustomerRepository(ApplicationDBContext context) : ICustomerRepository
+public class CustomerRepository(ApplicationDbContext context) : ICustomerRepository
 {
-    private readonly ApplicationDBContext _dbContext = context;
+    private readonly ApplicationDbContext _dbContext = context;
     private readonly DbSet<Customer> _dbSet = context.Set<Customer>();
 
     public Task<Customer?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
@@ -14,11 +14,12 @@ public class CustomerRepository(ApplicationDBContext context) : ICustomerReposit
         return _dbSet.FindAsync(id, cancellationToken).AsTask();
     }
 
-    public Task<int> AddAndSaveAsync(Customer customer, CancellationToken cancellationToken = default)
+    public async Task<int> AddAndSaveAsync(Customer customer, CancellationToken cancellationToken = default)
     {
-        var result = _dbSet.AddAsync(customer, cancellationToken).AsTask();
+        await _dbSet.AddAsync(customer, cancellationToken);
+        await _dbContext.SaveChangesAsync(cancellationToken);
 
-        return Task.FromResult(result.IsCompleted ? 1 : 0);
+        return 1;
     }
 
     public async Task<int> DeleteByIdAsync(int id, CancellationToken cancellationToken = default)

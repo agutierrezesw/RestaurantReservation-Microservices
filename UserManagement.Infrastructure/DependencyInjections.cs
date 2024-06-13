@@ -13,7 +13,7 @@ public static class DependencyInjections
         string sqlDatabaseConnectionString = configuration.GetConnectionString("DefaultConnection") 
                                              ?? throw new ArgumentNullException(nameof(configuration));
 
-        services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(sqlDatabaseConnectionString));
+        services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(sqlDatabaseConnectionString));
 
         services.AddScoped<ICustomerRepository, CustomerRepository>();
 
