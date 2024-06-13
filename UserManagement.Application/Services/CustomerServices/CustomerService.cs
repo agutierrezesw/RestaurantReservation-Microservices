@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RestaurantReservation.Core.Events.Contracts;
+using RestaurantReservation.Core.Events.Events;
 using UserManagement.Domain.Entities.Customers;
 using UserManagement.Domain.Repositories;
 
@@ -11,10 +8,12 @@ namespace UserManagement.Application.Services.CustomerServices
     public class CustomerService
     {
         private readonly ICustomerRepository _customerRepository;
+        private readonly IEventPublisher _eventPublisher;
 
-        public CustomerService(ICustomerRepository customerRepository)
+        public CustomerService(ICustomerRepository customerRepository, IEventPublisher eventPublisher)
         {
             _customerRepository = customerRepository;
+            _eventPublisher = eventPublisher;
         }
 
         public async Task<int> CreateCustomerAsync(NewCustomerRequest request)
@@ -28,10 +27,13 @@ namespace UserManagement.Application.Services.CustomerServices
             };
 
             // Add the customer to the repository
-            return await _customerRepository.AddAndSaveAsync(customer);
-            
-            //EventRecorder.Record(new UserWasCreatedEvent()); 
-            // eventrecorder -> kafka publisher
+            await _customerRepository.AddAndSaveAsync(customer);
+
+            await _eventPublisher.Publish(
+                new CustomerWasCreatedIntegrationEvent(customer.Id, customer.FirstName, customer.LastName)
+            );
+
+            return 1;
         }
 
         public async Task DeleteCustomerAsync(int id)

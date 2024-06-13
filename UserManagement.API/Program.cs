@@ -1,3 +1,4 @@
+using RestaurantReservation.Core.Events;
 using UserManagement.API.RouteHandlerExtensions;
 using UserManagement.Application;
 using UserManagement.Infrastructure;
@@ -14,6 +15,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddApplication();
 // Add infrastructure injections
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddEventInfrastructure(builder.Configuration);
 
 // builder.WebHost.ConfigureKestrel(options =>
 // {
