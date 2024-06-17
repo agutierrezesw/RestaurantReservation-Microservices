@@ -8,6 +8,6 @@ namespace ReservationManagement.Domain.Repositories
 
         Task<int> AddAndSaveAsync(Restaurant restaurant, CancellationToken cancellationToken = default);
 
-        Task DeleteByIdAsync(int id, CancellationToken cancellationToken = default);
+        Task<int> DeleteByIdAsync(int id, CancellationToken cancellationToken = default);
     }
 }
