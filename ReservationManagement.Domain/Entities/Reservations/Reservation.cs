@@ -1,20 +1,15 @@
-﻿using RestaurantReservation.Core.Domain.Abstractions;
+﻿using ReservationManagement.Domain.Entities.Customers;
+using ReservationManagement.Domain.Entities.Restaurants;
+using RestaurantReservation.Core.Domain.Abstractions;
 
-namespace ReservationManagement.Domain.Entities.Reservations
+namespace ReservationManagement.Domain.Entities.Reservations;
+
+public class Reservation(Restaurant restaurant, Customer customer, int numberOfDiners, DateTime dateAndTime) : Entity
 {
-    public class Reservation : Entity
-    {
-        public int RestaurantId { get; set; }
-        public int CustomersId { get; set; }
-        public int NumberOfDiners { get; set; }
-        public DateTime DateAndTime { get; set; }
-
-        public Reservation(int restaurantId, int customersId, int numberOfDiners, DateTime dateAndTime)
-        {
-            RestaurantId = restaurantId;
-            CustomersId = customersId;
-            NumberOfDiners = numberOfDiners;
-            DateAndTime = dateAndTime;
-        }
-    }
+    public int RestaurantId { get; set; } = restaurant.Id;
+    public Restaurant Restaurant { get; set; } = restaurant;
+    public int CustomerId { get; set; } = customer.Id;
+    public Customer Customer { get; set; } = customer;
+    public int NumberOfDiners { get; set; } = numberOfDiners;
+    public DateTime DateAndTime { get; set; } = dateAndTime;
 }
