@@ -27,7 +27,7 @@ public static class DependencyInjection
                                    ?? throw new Exception("Config not found")
             };
 
-            var producer = new ProducerBuilder<Null, EventMessage>(config)
+            var producer = new ProducerBuilder<Null, IIntegrationEvent>(config)
                 .SetValueSerializer(new EventMessageSerializer())
                 .Build(); 
 

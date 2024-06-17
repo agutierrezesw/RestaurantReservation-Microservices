@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+﻿using System.Text;
 using Confluent.Kafka;
 using RestaurantReservation.Core.Events.Contracts;
 using RestaurantReservation.Core.Events.Events;
@@ -8,7 +8,7 @@ namespace RestaurantReservation.Core.Events.EventPublisher;
 /// <summary>
 /// Implementation of the event publisher using Confluent Kafka platform
 /// </summary>
-public class ApacheKafkaEventPublisher(IProducer<Null, EventMessage> producer) : IEventPublisher
+public class ApacheKafkaEventPublisher(IProducer<Null, IIntegrationEvent> producer) : IEventPublisher
 {
     /// <summary>
     /// Event list and the topic where dispatch event messages
@@ -31,10 +31,12 @@ public class ApacheKafkaEventPublisher(IProducer<Null, EventMessage> producer) :
         
         foreach (var topic in topics.Value)
         {
-            var eventMessage = new EventMessage(eventName, JsonSerializer.Serialize(@event, @event.GetType()));
-            await producer.ProduceAsync(topic, new Message<Null, EventMessage>
+            var headers = new Headers();
+            headers.Add(new Header("EventName", Encoding.ASCII.GetBytes(eventName)));
+            await producer.ProduceAsync(topic, new Message<Null, IIntegrationEvent>
             {
-                Value = eventMessage
+                Headers = headers,
+                Value = @event
             });
         }
 
