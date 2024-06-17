@@ -19,21 +19,37 @@ public static class DependencyInjection
         IConfiguration configuration
     )
     {
-        return services.AddScoped<IEventPublisher, ApacheKafkaEventPublisher>(_ =>
+        var bootstrapServers = configuration["ApacheKafka:BootstrapServers"]
+                               ?? throw new Exception("Bootstrap server is not configured");
+
+        // Add event publisher kafka implementation
+        services.AddScoped<IEventPublisher, ApacheKafkaEventPublisher>(_ =>
         {
             var config = new ProducerConfig
             {
-                BootstrapServers = configuration["ApacheKafka:BootstrapServers"] 
-                                   ?? throw new Exception("Config not found")
+                BootstrapServers = bootstrapServers
             };
 
             var producer = new ProducerBuilder<Null, IIntegrationEvent>(config)
                 .SetValueSerializer(new EventMessageSerializer())
-                .Build(); 
+                .Build();
 
             var eventPublisher = new ApacheKafkaEventPublisher(producer);
 
             return eventPublisher;
+        });
+
+        // Add kafka consumer
+        return services.AddSingleton<ConsumerBuilder<Null, IIntegrationEvent>>(_ =>
+        {
+            var config = new ConsumerConfig
+            {
+                BootstrapServers = bootstrapServers,
+                GroupId = configuration["ApacheKafka:GroupId"]
+            };
+
+            return new ConsumerBuilder<Null, IIntegrationEvent>(config)
+                .SetValueDeserializer(new EventMessageSerializer());
         });
     }
 }

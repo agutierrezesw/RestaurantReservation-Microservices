@@ -19,8 +19,7 @@ public class EventMessageSerializer: ISerializer<IIntegrationEvent>, IDeserializ
         var header = context.Headers.First(h => h.Key == "EventName")
                         ?? throw new Exception("Cannot deserialize event");
 
-        var eventName = header.GetValueBytes().ToString()
-                        ?? throw new Exception("Cannot resolve event name");
+        var eventName = System.Text.Encoding.UTF8.GetString(header.GetValueBytes());
 
         var eventType = Type.GetType(eventName)
                         ?? throw new Exception("Cannot resolve event type");
