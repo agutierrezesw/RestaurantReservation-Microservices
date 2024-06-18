@@ -2,9 +2,9 @@
 
 namespace RestaurantReservation.Core.Events.Events.Customer;
 
-public class RestaurantWasCreatedIntegrationEvent(int id, string name, int MaxNumberOfSeats) : IIntegrationEvent
+public record RestaurantWasCreatedIntegrationEvent : IIntegrationEvent
 {
-    public int Id { get; set; } = id;
-    public string Name { get; set; } = name;
-    public int MaxNumberOfSeats { get; set; } = MaxNumberOfSeats;
+    public int Id;
+    public string Name;
+    public int MaxNumberOfSeats;
 }

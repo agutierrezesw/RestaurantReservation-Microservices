@@ -2,12 +2,12 @@
 
 namespace RestaurantReservation.Core.Events.Events.Customer;
 
-public class CustomerWasCreatedIntegrationEvent(int id, string firstName, string lastName, string email, int?  totalNumberOfReservations, string? lastRestaurantReserved) : IIntegrationEvent
+public record CustomerWasCreatedIntegrationEvent : IIntegrationEvent
 {
-    public int Id { get; set; } = id;
-    public string FirstName { get; set; } = firstName;
-    public string LastName { get; set; } = lastName;
-    public string Email { get; set; } = email;
-    public int TotalNumberOfReservations { get; set; } = totalNumberOfReservations ?? 0;
-    public string LastRestaurantReserved { get; set; } = lastRestaurantReserved ?? string.Empty;
+    public int Id;
+    public string FirstName;
+    public string LastName;
+    public string Email;
+    public int TotalNumberOfReservations;
+    public string LastRestaurantReserved;
 }
