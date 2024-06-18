@@ -1,3 +1,5 @@
-﻿namespace ReservationManagement.Application.Services.Commands.CreateCustomer;
+﻿using MediatR;
 
-record CreateCustomerCommand(int Id);
+namespace ReservationManagement.Application.Services.Commands.CreateCustomer;
+
+public record CreateCustomerCommand(int Id) : IRequest;

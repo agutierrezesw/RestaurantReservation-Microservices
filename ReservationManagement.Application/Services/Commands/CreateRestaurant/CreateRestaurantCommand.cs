@@ -1,3 +1,5 @@
-﻿namespace ReservationManagement.Application.Services.Commands.CreateRestaurant;
+﻿using MediatR;
 
-record CreateRestaurant(int Id, int MaxNumberOfSeats);
+namespace ReservationManagement.Application.Services.Commands.CreateRestaurant;
+
+public record CreateRestaurantCommand(int Id, int MaxNumberOfSeats) : IRequest;
