@@ -4,11 +4,11 @@ using ReservationManagement.Domain.Repositories;
 
 namespace ReservationManagement.Application.Services.Commands.CreateRestaurant;
 
-public class CreateRestaurantCommandHandler(IRestaurantRepository restaurantRepository) : IRequestHandler<CreateRestaurantCommand>
+public class CreateOrUpdateRestaurantCommandHandler(IRestaurantRepository restaurantRepository) : IRequestHandler<CreateOrUpdateRestaurantCommand>
 {
     private readonly IRestaurantRepository _restaurantRepository = restaurantRepository;
 
-    public async Task Handle(CreateRestaurantCommand command, CancellationToken cancellationToken)
+    public async Task Handle(CreateOrUpdateRestaurantCommand command, CancellationToken cancellationToken)
     {
         Restaurant? restaurant = await _restaurantRepository.GetByIdAsync(command.Id);
 

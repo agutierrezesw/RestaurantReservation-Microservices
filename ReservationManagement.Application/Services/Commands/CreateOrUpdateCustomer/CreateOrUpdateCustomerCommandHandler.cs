@@ -2,13 +2,13 @@
 using ReservationManagement.Domain.Repositories;
 using ReservationManagement.Domain.Entities.Customers;
 
-namespace ReservationManagement.Application.Services.Commands.CreateCustomer;
+namespace ReservationManagement.Application.Services.Commands.CreateOrUpdateCustomer;
 
-public class CreateCustomerCommandHandler(ICustomerRepository customerRepository) : IRequestHandler<CreateCustomerCommand>
+public class CreateOrUpdateCustomerCommandHandler(ICustomerRepository customerRepository) : IRequestHandler<CreateOrUpdateCustomerCommand>
 {
     private readonly ICustomerRepository _customerRepository = customerRepository;
 
-    public async Task Handle(CreateCustomerCommand command, CancellationToken cancellationToken)
+    public async Task Handle(CreateOrUpdateCustomerCommand command, CancellationToken cancellationToken)
     {
         Customer? customer = await _customerRepository.GetByIdAsync(command.Id);
 

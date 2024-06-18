@@ -10,7 +10,7 @@ class RestaurantWasUpdatedEventHandler(IMediator mediator) : INotificationHandle
 
     public Task Handle(RestaurantWasUpdatedIntegrationEvent @event, CancellationToken cancellationToken)
     {
-        CreateRestaurantCommand command = new(@event.Id, @event.MaxNumberOfSeats);
+        CreateOrUpdateRestaurantCommand command = new(@event.Id, @event.MaxNumberOfSeats);
         return Mediator.Send(command, cancellationToken);
     }
 }
