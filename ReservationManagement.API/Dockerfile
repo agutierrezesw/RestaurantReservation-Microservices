@@ -1,22 +1,41 @@
-﻿FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-USER $APP_UID
-WORKDIR /app
-EXPOSE 5000
+﻿# Usa la imagen base del SDK de .NET para la construcción de la aplicación
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-ARG BUILD_CONFIGURATION=Release
-WORKDIR /src
-COPY ["ReservationManagement.API/ReservationManagement.API.csproj", "ReservationManagement.API/"]
-RUN dotnet restore "ReservationManagement.API/ReservationManagement.API.csproj"
+# Establece el directorio de trabajo en /app
+WORKDIR /app
+
+# Copia la solución y los archivos de proyecto al directorio de trabajo
+#COPY ../../*.sln .
+
+RUN mkdir ReservationManagement.API
+
+COPY ../RestaurantReservation.Core.Domain/*.csproj RestaurantReservation.Core.Domain/
+COPY ../ReservationManagement.Application/*.csproj ReservationManagement.Application/
+COPY ../ReservationManagement.Domain/*.csproj ReservationManagement.Domain/
+COPY ../ReservationManagement.Infrastructure/*.csproj ReservationManagement.Infrastructure/
+COPY ./ReservationManagement.API/ReservationManagement.API.csproj ./ReservationManagement.API/
+
+
+# Restaura las dependencias especificadas en los archivos de proyecto
+RUN dotnet restore ./ReservationManagement.API
+
+# Copia todo el contenido restante al directorio de trabajo
 COPY . .
-WORKDIR "/src/ReservationManagement.API"
-RUN dotnet build "ReservationManagement.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
-FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "ReservationManagement.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+# Publica la aplicación en modo Release y la salida se coloca en el directorio 'out'
+RUN dotnet publish ReservationManagement.API/ReservationManagement.API.csproj -c Release -o out
 
-FROM base AS final
+# Usa la imagen base de runtime de ASP.NET para la ejecución de la aplicación
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+
+# Establece el directorio de trabajo en /app
 WORKDIR /app
-COPY --from=publish /app/publish .
+
+# Copia los archivos publicados desde la etapa de construcción al directorio de trabajo
+COPY --from=build-env /app/out .
+
+# Define el punto de entrada para la aplicación
 ENTRYPOINT ["dotnet", "ReservationManagement.API.dll"]
+
+# Expone el puerto 5000 para acceder a la aplicación
+EXPOSE 5001
