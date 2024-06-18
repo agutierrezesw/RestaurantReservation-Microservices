@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using Confluent.Kafka;
 using RestaurantReservation.Core.Events.Contracts;
-using RestaurantReservation.Core.Events.Events;
+using RestaurantReservation.Core.Events.Events.Customer;
 
 namespace RestaurantReservation.Core.Events.EventPublisher;
 
