@@ -5,5 +5,5 @@ namespace ReservationManagement.Domain.Entities.Customers;
 
 public class Customer : Entity
 {
-    public List<Reservation> Reservations { get; set; } = [];
+    public ICollection<Reservation> Reservations { get; set; } = [];
 }

@@ -16,6 +16,8 @@ public static class DependencyInjections
         services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(sqlDatabaseConnectionString));
 
         services.AddScoped<ICustomerRepository, CustomerRepository>();
+        services.AddScoped<IRestaurantRepository, RestaurantRepository>();
+        services.AddScoped<IReservationRepository, ReservationRepository>();
 
         return services;
     }

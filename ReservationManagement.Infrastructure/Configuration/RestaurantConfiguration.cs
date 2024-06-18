@@ -12,5 +12,9 @@ public class RestaurantConfiguration : IEntityTypeConfiguration<Restaurant>
 
         builder.Property(r => r.MaxNumberOfSeats)
             .IsRequired();
+
+        builder.HasMany(r => r.Reservations)
+            .WithOne(r => r.Restaurant)
+            .HasForeignKey(r => r.RestaurantId);
     }
 }

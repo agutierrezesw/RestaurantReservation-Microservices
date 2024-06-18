@@ -3,8 +3,8 @@ using ReservationManagement.Domain.Entities.Reservations;
 
 namespace ReservationManagement.Domain.Entities.Restaurants;
 
-public class Restaurant(int maxNumberOfSeats) : Entity
+public class Restaurant : Entity
 {
-    public int MaxNumberOfSeats { get; set; } = maxNumberOfSeats;
-    public List<Reservation> Reservations { get; set; } = [];
+    public int MaxNumberOfSeats { get; set; }
+    public ICollection<Reservation> Reservations { get; set; } = [];
 }

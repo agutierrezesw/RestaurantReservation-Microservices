@@ -24,6 +24,6 @@ public class ReservationConfiguration : IEntityTypeConfiguration<Reservation>
         builder.HasOne(r => r.Customer)
             .WithMany(r => r.Reservations)
             .HasForeignKey(r => r.CustomerId)
-            .HasPrincipalKey(r => r.Id);
+            .HasPrincipalKey(c => c.Id);
     }
 }

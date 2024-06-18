@@ -4,12 +4,12 @@ using RestaurantReservation.Core.Domain.Abstractions;
 
 namespace ReservationManagement.Domain.Entities.Reservations;
 
-public class Reservation(Restaurant restaurant, Customer customer, int numberOfDiners, DateTime dateAndTime) : Entity
+public class Reservation : Entity
 {
-    public int RestaurantId { get; set; } = restaurant.Id;
-    public Restaurant Restaurant { get; set; } = restaurant;
-    public int CustomerId { get; set; } = customer.Id;
-    public Customer Customer { get; set; } = customer;
-    public int NumberOfDiners { get; set; } = numberOfDiners;
-    public DateTime DateAndTime { get; set; } = dateAndTime;
+    public int RestaurantId { get; set; }
+    public Restaurant Restaurant { get; set; }
+    public int CustomerId { get; set; }
+    public Customer Customer { get; set; }
+    public int NumberOfDiners { get; set; }
+    public DateTime DateAndTime { get; set; }
 }
