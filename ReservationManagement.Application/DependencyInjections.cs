@@ -9,6 +9,11 @@ public static class DependencyInjections
     {
         services.AddTransient<ReservationService>();
 
+        services.AddMediatR(config =>
+        {
+            config.RegisterServicesFromAssembly(typeof(DependencyInjections).Assembly);
+        });
+
         return services;
     }
 }
