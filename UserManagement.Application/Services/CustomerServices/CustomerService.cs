@@ -30,15 +30,14 @@ namespace UserManagement.Application.Services.CustomerServices
             await _customerRepository.AddAndSaveAsync(customer);
 
             await _eventPublisher.Publish(
-                new CustomerWasCreatedIntegrationEvent
-                {
-                    Id = customer.Id,
-                    FirstName = customer.FirstName,
-                    LastName = customer.LastName,
-                    Email = customer.Email,
-                    TotalNumberOfReservations = customer.TotalNumberOfReservations,
-                    LastRestaurantReserved = customer.LastRestaurantReserved
-                }
+                new CustomerWasCreatedIntegrationEvent(
+                    Id: customer.Id,
+                    FirstName: customer.FirstName,
+                    LastName: customer.LastName,
+                    Email: customer.Email,
+                    TotalNumberOfReservations: customer.TotalNumberOfReservations,
+                    LastRestaurantReserved: customer.LastRestaurantReserved
+                )
             );
 
             return 1;
