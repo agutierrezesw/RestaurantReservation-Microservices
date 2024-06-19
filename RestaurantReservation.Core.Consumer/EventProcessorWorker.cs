@@ -22,7 +22,7 @@ public class EventProcessorWorker(
     /// Read events from kafka cluster and dispatch it as Mediator notifications
     /// </summary>
     /// <param name="stoppingToken"></param>
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {
         using var consumer = builder.Build();
         consumer.Subscribe(topic);
@@ -30,24 +30,30 @@ public class EventProcessorWorker(
         {
             logger.LogInformation("Waiting for event messages at topic {topic}", topic);
 
-            try
-            {
-                var consumeResult = consumer.Consume(stoppingToken);
-                if (consumeResult is null) continue;
+            var consumeResult = consumer.Consume(stoppingToken);
+            if (consumeResult is null) continue;
 
-                logger.LogInformation(
-                    "Event received with timestamp {timestamp}",
-                    consumeResult.Message.Timestamp
-                );
+            logger.LogInformation(
+                "Event received with timestamp {timestamp}",
+                consumeResult.Message.Timestamp
+            );
 
-                await mediator.Publish(consumeResult.Message.Value, stoppingToken);
-            }
-            catch(Exception e)
+            Task.Run(async () =>
             {
-                logger.LogError(e, "Worker error");
-            }
+                logger.LogInformation("Dispatching event handler in thread {thread}", Thread.CurrentThread.ManagedThreadId);
+                try
+                {
+                    await mediator.Publish(consumeResult.Message.Value, stoppingToken);
+                }
+                catch(Exception e)
+                {
+                    logger.LogError("Event handler error: {message}", e.Message);  
+                }
+            }, stoppingToken);
         }
 
         consumer.Close();
+
+        return Task.FromCanceled(stoppingToken);
     }
 }
