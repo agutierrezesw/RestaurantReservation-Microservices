@@ -1,5 +1,5 @@
 ﻿using RestaurantReservation.Core.Events.Contracts;
-using RestaurantReservation.Core.Events.Events;
+using RestaurantReservation.Core.Events.Events.Customer;
 using UserManagement.Domain.Entities.Customers;
 using UserManagement.Domain.Repositories;
 
@@ -30,7 +30,15 @@ namespace UserManagement.Application.Services.CustomerServices
             await _customerRepository.AddAndSaveAsync(customer);
 
             await _eventPublisher.Publish(
-                new CustomerWasCreatedIntegrationEvent(customer.Id, customer.FirstName, customer.LastName)
+                new CustomerWasCreatedIntegrationEvent
+                {
+                    Id = customer.Id,
+                    FirstName = customer.FirstName,
+                    LastName = customer.LastName,
+                    Email = customer.Email,
+                    TotalNumberOfReservations = customer.TotalNumberOfReservations,
+                    LastRestaurantReserved = customer.LastRestaurantReserved
+                }
             );
 
             return 1;
