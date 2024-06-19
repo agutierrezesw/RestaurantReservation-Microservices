@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using ReservationManagement.Application.Services.Commands.CreateRestaurant;
+using ReservationManagement.Application.Services.Commands.CreateOrUpdateRestaurant;
 using RestaurantReservation.Core.Events.Events.Customer;
 
 namespace ReservationManagement.Application.Services.Events.Restaurant;

@@ -2,7 +2,7 @@
 using ReservationManagement.Domain.Entities.Restaurants;
 using ReservationManagement.Domain.Repositories;
 
-namespace ReservationManagement.Application.Services.Commands.CreateRestaurant;
+namespace ReservationManagement.Application.Services.Commands.CreateOrUpdateRestaurant;
 
 public class CreateOrUpdateRestaurantCommandHandler(IRestaurantRepository restaurantRepository) : IRequestHandler<CreateOrUpdateRestaurantCommand>
 {
