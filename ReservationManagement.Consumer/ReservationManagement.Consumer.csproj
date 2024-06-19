@@ -9,7 +9,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="MediatR" Version="12.3.0" />
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
     </ItemGroup>
 
@@ -22,6 +21,7 @@
     <ItemGroup>
       <ProjectReference Include="..\ReservationManagement.Application\ReservationManagement.Application.csproj" />
       <ProjectReference Include="..\ReservationManagement.Infrastructure\ReservationManagement.Infrastructure.csproj" />
+      <ProjectReference Include="..\RestaurantReservation.Core.Consumer\RestaurantReservation.Core.Consumer.csproj" />
       <ProjectReference Include="..\RestaurantReservation.Core.Events\RestaurantReservation.Core.Events.csproj" />
     </ItemGroup>
 </Project>

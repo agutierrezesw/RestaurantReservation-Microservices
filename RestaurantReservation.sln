@@ -41,6 +41,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantReservation.Core.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReservationManagement.Consumer", "ReservationManagement.Consumer\ReservationManagement.Consumer.csproj", "{A5F09D63-F723-469D-BF6D-4386083C6E27}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantReservation.Core.Consumer", "RestaurantReservation.Core.Consumer\RestaurantReservation.Core.Consumer.csproj", "{31240133-6674-4C03-9AB7-2C218F86C5EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -107,6 +109,10 @@ Global
 		{A5F09D63-F723-469D-BF6D-4386083C6E27}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5F09D63-F723-469D-BF6D-4386083C6E27}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5F09D63-F723-469D-BF6D-4386083C6E27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31240133-6674-4C03-9AB7-2C218F86C5EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31240133-6674-4C03-9AB7-2C218F86C5EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31240133-6674-4C03-9AB7-2C218F86C5EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31240133-6674-4C03-9AB7-2C218F86C5EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -127,6 +133,7 @@ Global
 		{3F88EA1F-000A-4041-8BCD-01043C783744} = {2C1F0085-3BF8-49C5-B306-14057E40D188}
 		{1C415397-FC71-42B6-8849-CDA3D1AD1E2F} = {CDA8B8C5-620F-45CF-A457-E9451DE17CBE}
 		{A5F09D63-F723-469D-BF6D-4386083C6E27} = {2C1F0085-3BF8-49C5-B306-14057E40D188}
+		{31240133-6674-4C03-9AB7-2C218F86C5EE} = {CDA8B8C5-620F-45CF-A457-E9451DE17CBE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5AAAF686-239A-4EA3-850E-6917996012AD}
