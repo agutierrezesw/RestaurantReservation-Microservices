@@ -26,7 +26,7 @@ public static class DependencyInjections
         services.AddHostedService<EventProcessorWorker>(serviceProvider => new EventProcessorWorker(
             logger: serviceProvider.GetRequiredService<ILogger<EventProcessorWorker>>(),
             builder: serviceProvider.GetRequiredService<ConsumerBuilder<Null, IIntegrationEvent>>(),
-            mediator: serviceProvider.GetRequiredService<IMediator>(),
+            serviceScopeFactory: serviceProvider.GetRequiredService<IServiceScopeFactory>(),
             topic: topic
         ));
 

@@ -1,5 +1,7 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using RestaurantReservation.Core.Events.Contracts;
 
 namespace RestaurantReservation.Core.Consumer;
 
@@ -14,7 +16,7 @@ using ConsumerBuilder =
 public class EventProcessorWorker(
     ILogger<EventProcessorWorker> logger, 
     ConsumerBuilder builder,
-    IMediator mediator,
+    IServiceScopeFactory serviceScopeFactory,
     string topic) : BackgroundService
 {
  
@@ -37,23 +39,37 @@ public class EventProcessorWorker(
                 "Event received with timestamp {timestamp}",
                 consumeResult.Message.Timestamp
             );
-
-            Task.Run(async () =>
-            {
-                logger.LogInformation("Dispatching event handler in thread {thread}", Thread.CurrentThread.ManagedThreadId);
-                try
-                {
-                    await mediator.Publish(consumeResult.Message.Value, stoppingToken);
-                }
-                catch(Exception e)
-                {
-                    logger.LogError("Event handler error: {message}", e.Message);  
-                }
-            }, stoppingToken);
+            
+            ProcessEvent(consumeResult.Message.Value, stoppingToken);
         }
 
         consumer.Close();
 
         return Task.FromCanceled(stoppingToken);
+    }
+
+    /// <summary>
+    /// Dispatch event to a scoped mediator instance
+    /// </summary>
+    /// <param name="event"></param>
+    /// <param name="stoppingToken"></param>
+    private async void ProcessEvent(IIntegrationEvent @event, CancellationToken stoppingToken)
+    {
+        logger.LogInformation(
+            "Dispatching event handler in thread {thread}", 
+            Thread.CurrentThread.ManagedThreadId
+        );
+
+        using var scope = serviceScopeFactory.CreateScope();
+        var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+        
+        try
+        {
+            await mediator.Publish(@event, stoppingToken);
+        }
+        catch(Exception e)
+        {
+            logger.LogError(e, "Error during event handler execution");  
+        }
     }
 }
